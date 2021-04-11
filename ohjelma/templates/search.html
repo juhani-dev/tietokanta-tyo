@@ -1,0 +1,42 @@
+<h3> toimii <a href="/topics"> topics </a>  </h3>
+<form action="/search" method="GET">
+    Etsi aiheita hakusana: <input type="text" name="query">
+    <br>
+    <input type="submit" value="Lähetä">
+    <br>
+
+    {%  for  topic in topics %}    
+    Mene aiheeseen:  
+    <a href="/topic/{{topic[0]}}"> {{topic[1]}} </a>
+    <br>
+    {% endfor %}
+
+    
+    
+</form>
+<form action="/search_message" method="GET">
+
+    Etsi viestejä hakusana: <input type="text" name="query_message">
+    <br>
+    <input type="submit" value="Lähetä">
+    <br>
+
+    {% for message in messages %}
+    {{message[1]}}
+    {% endfor %}
+    <br>
+</form>
+<form action="/search_user" method="GET">
+
+    Etsi käyttäjää hakusana: <input type="text" name="query_user">
+    <br>
+    <input type="submit" value="Lähetä">
+    <br>
+
+    {% for user in users %}
+    käyttäjä: 
+    <a href="{{user[1]}}"> {{user[1]}}</a> 
+    <br>
+    {% endfor %}
+    
+</form>

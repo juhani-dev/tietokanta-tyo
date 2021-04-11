@@ -1,0 +1,18 @@
+<hr>
+
+
+{% for topic in topics %}
+Aihe: 
+
+<a href="/topic/{{topic[2]}}"> {{topic[0]}} </a>
+luoja: 
+<a href="{{topic[1]}}"> {{topic[1]}}</a> 
+<hr>
+{% endfor%}
+<a href="/new_topic">Luo uusi aihe</a>
+<hr>
+<a href="/searchgo"> search page</a>
+
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<button type="button" onclick="javascript:history.back()">Back</button>
+<a href="/logout">Kirjaudu ulos</a>

@@ -1,0 +1,8 @@
+<h2>käyttäjän {{name}} luomat aiheet:</h2>
+{% for i in result%}
+<br>
+Mene aiheeseen:
+<a href="/topic/{{i[0]}}"> {{i[1]}} </a>
+
+<br>
+{% endfor %}

@@ -1,0 +1,24 @@
+
+<h1>{{ topic }}
+   
+{{ id }}</h1>
+{% for message in messages %}
+<br>
+Käyttäjältä: <a href="/{{message[1]}}"> {{message[1]}}</a> 
+:{{message[0]}}
+
+<br>
+{% endfor %}
+
+<form action="/send" method="POST">
+<textarea name="message" rows="3" cols="40"></textarea>
+<br>
+
+<input type="submit" value="Lähetä">
+<input type="hidden" name="id" value="{{ id }}">
+
+</form>
+
+<form action="/topics">
+    <input type="submit" value="topics" />
+</form>
