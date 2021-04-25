@@ -6,3 +6,10 @@ Mene aiheeseen:
 
 <br>
 {% endfor %}
+<h3>Lahetety viestit:</h3>
+
+{% for i in messages %}
+{{i[0]}}
+{% endfor %}
+<br> 
+you are {{session.level}} user

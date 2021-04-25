@@ -1,57 +1,64 @@
-from flask import Flask
+from start import start
 from flask import redirect, render_template, request,session
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 from sqlalchemy import text
 from werkzeug.security import check_password_hash, generate_password_hash
+from db import db
+
+import searches
 
 
 
-app = Flask(__name__)
-app.secret_key = getenv("SECRET_KEY")
-app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
-db = SQLAlchemy(app)
 
-@app.route("/")
+@start.route("/")
 def index():
     return render_template("index.html")
 
-@app.route("/login",methods=["POST"])
+@start.route("/login",methods=["POST"])
 def login():
     username = request.form["username"]
     password = request.form["password"]
+    
 
-    sql = "SELECT password FROM usersf WHERE username=:username"
+    sql = "SELECT password,admin FROM usersf WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()    
-    if user == None:
-    # TODO: invalid username
 
+    if user == None:
+    
         return render_template("index.html", word="WRONG USERNAME")
 
     else:
         hash_value = user[0]
         if check_password_hash(hash_value,password):
-        # TODO: correct username and password
-            redirect("/topics")
+
+            session["username"] = username
+            if user[1] == 1:
+                session["level"] = "admin"
+            else:
+                session["level"] = "normal"
+            
+            return redirect("/topics")
         else:
             return render_template("index.html", word="WRONG PASSWORD")
-        # TODO: invalid password
+    
         
-    session["username"] = username
+    
     return redirect("/topics")
 
-@app.route("/logout")
+@start.route("/logout")
 def logout():
     del session["username"]
+    
     return redirect("/")
 
-@app.route("/createUserRedirect")
+@start.route("/createUserRedirect")
 def createUserRedirect():
     
     return render_template("createUser.html")
 
-@app.route("/createUser",methods=["POST"])
+@start.route("/createUser",methods=["POST"])
 def createUser():
     username = request.form["username"]
     password = request.form["password"]
@@ -63,12 +70,14 @@ def createUser():
     return redirect("/")
 
 
-@app.route("/topics")
+@start.route("/topics")
 def front():
     
     
-    sql =db.session.execute("SELECT topic,username,topics.id FROM topics, usersf, topic_creator WHERE topics.id=topic_creator.topic_id and topic_creator.user_id=usersf.id")
+    sql =db.session.execute("SELECT topic,usersf.username,topics.id,topics.visible FROM topics, usersf, topic_creator WHERE topics.id=topic_creator.topic_id and topic_creator.user_id=usersf.id")
     topics = sql.fetchall()
+
+   
     
     #result = db.session.execute("SELECT id, topic FROM topics")
     #topics = result.fetchall()
@@ -82,12 +91,12 @@ def front():
 
     return render_template("topics.html", topics=topics)
 
-@app.route("/create",methods=["POST"])
+@start.route("/create",methods=["POST"])
 def create():
     username=session.get('username')
     topic = request.form["topic"]
 
-    sql = "INSERT INTO topics (topic) VALUES (:topic) RETURNING id" ###uusi 
+    sql = "INSERT INTO topics (topic,visible) VALUES (:topic,0) RETURNING id" ###uusi 
     result =db.session.execute(sql, {"topic":topic}) ###uusi
     topic_id = result.fetchone()[0] ##uusi
 
@@ -102,12 +111,12 @@ def create():
    
     return redirect("/topics")
 
-@app.route("/new_topic")
+@start.route("/new_topic")
 def new_subject():
     return render_template("new_topic.html")
 
 
-@app.route("/topic/<int:id>")
+@start.route("/topic/<int:id>")
 def subject(id):
     
     
@@ -115,64 +124,81 @@ def subject(id):
     result = db.session.execute(sql, {"id":id})
     topic = result.fetchone()[0]
     
-    sql = text("SELECT message,username FROM messages WHERE message_id=:id")
-    result = db.session.execute(sql,{"id":id} )
+    sql = text("SELECT message,username FROM messages WHERE message_id=:id AND visible=:1")
+    result = db.session.execute(sql,{"id":id,"1":1} )
     messages = result.fetchall()
     
+    sql ="SELECT  COUNT(message) FROM messages WHERE visible = 1 AND message_id=:id  GROUP BY message_id;"
+    result = db.session.execute(sql,{"id":id} )
+    count = result.fetchall() 
+    
 
-    return render_template("messages.html",topic=topic, id = id, messages = messages)
+    return render_template("messages.html",topic=topic, id = id, messages = messages,count =count)
 
-@app.route("/send",methods=["POST"])
+@start.route("/send",methods=["POST"])
 def send():
     username=session.get('username')
     message_id = request.form["id"]
 
     message = request.form["message"]
-    sql = "INSERT INTO messages (message, message_id,username) VALUES (:message, :message_id, :username)"
-    db.session.execute(sql, {"message":message,"message_id":message_id,"username":username})
+    sql = "INSERT INTO messages (message, message_id,username,visible) VALUES (:message, :message_id, :username, :visible)"
+    db.session.execute(sql, {"message":message,"message_id":message_id,"username":username,"visible":1})
     
     db.session.commit()
     return redirect("/topic/"+str(message_id))
 
-@app.route("/<username>")
+@start.route("/<username>")
 def user(username):
     name = username
-    sql=("SELECT T.id, topic, username FROM topics T, usersf U, topic_creator C WHERE U.username=:username AND T.id = C.topic_id AND C.user_id = U.id")
+    sql=("SELECT T.id, topic, username FROM topics T, usersf U, topic_creator C WHERE U.username=:username AND T.id = C.topic_id AND C.user_id = U.id AND T.visible = 0")
     result =db.session.execute(sql,{"username":username})
-
-    return render_template("test.html",result =result,name = name)
-
-@app.route("/search")
-def search():
+    
+    sql=("SELECT message FROM messages WHERE username=:username AND visible=:1 ")
+    messages = db.session.execute(sql,{"username":username,"1":1})
     
 
-    query = request.args["query"]
-    sql = "SELECT id, topic FROM topics WHERE topic LIKE :query"
-    result = db.session.execute(sql, {"query":"%"+query+"%"})
-    topics = result.fetchall()
+    return render_template("test.html",result =result,name = name, messages= messages)
+
+@start.route("/search")
+def search():
+
+    topics = searches.get_topic()
+
     return render_template("search.html",topics=topics)
 
 
-@app.route("/search_message")
+@start.route("/search_message")
 def search_message():
     
-    query =request.args["query_message"]
-    sql = "SELECT id, message FROM messages WHERE message LIKE :query"
-    result = db.session.execute(sql, {"query":"%"+query+"%"})
-    messages = result.fetchall()
+    messages = searches.get_messages()
 
     return render_template("search.html",messages=messages)
 
-@app.route("/search_user")
+@start.route("/search_user")
 def search_user():
     
-    query =request.args["query_user"]
-    sql = "SELECT id, username FROM usersf WHERE username LIKE :query"
-    result = db.session.execute(sql, {"query":"%"+query+"%"})
-    users = result.fetchall()
+    users = searches.get_user()
 
     return render_template("search.html",users=users)
 
-@app.route("/searchgo")
+@start.route("/searchgo")
 def topic_search():
     return render_template("search.html")
+
+@start.route("/hide/<int:id>")
+def hide(id):
+   
+    sql = "UPDATE topics SET visible=1 WHERE id=:id"
+    db.session.execute(sql, {"id":id})
+    db.session.commit()  
+    
+    return redirect("/topics")
+
+@start.route("/show/<int:id>")
+def show(id):
+    sql = "UPDATE topics SET visible=0 WHERE id=:id"
+    db.session.execute(sql, {"id":id})
+    db.session.commit()  
+    
+    return redirect("/topics")
+

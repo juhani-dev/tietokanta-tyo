@@ -22,7 +22,9 @@
     <br>
 
     {% for message in messages %}
-    {{message[1]}}
+    lahettaja: 
+    <a href="{{message[0]}}"> {{message[0]}}</a>  
+    viesti: {{message[1]}}
     {% endfor %}
     <br>
 </form>

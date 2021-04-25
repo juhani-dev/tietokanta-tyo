@@ -1,7 +1,7 @@
 
-<h1>{{ topic }}
-   
-{{ id }}</h1>
+<h1>{{ topic }} {{ id }}</h1>
+    <h2> viestejä {{count[0]}}</h2>
+
 {% for message in messages %}
 <br>
 Käyttäjältä: <a href="/{{message[1]}}"> {{message[1]}}</a> 
@@ -22,3 +22,4 @@ Käyttäjältä: <a href="/{{message[1]}}"> {{message[1]}}</a>
 <form action="/topics">
     <input type="submit" value="topics" />
 </form>
+
