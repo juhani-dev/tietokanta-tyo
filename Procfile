@@ -1,1 +1,1 @@
-web: gunicorn start:start 
+web: gunicorn ohjelma.start:start 
