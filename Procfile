@@ -1,1 +1,1 @@
-web: gunicorn start:start
+web:gunicorn start:start
