@@ -1,1 +1,1 @@
-web: gunicorn ohjelma.start:starts --timeout 30
+web: gunicorn start:start 
