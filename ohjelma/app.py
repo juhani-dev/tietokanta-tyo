@@ -1,4 +1,4 @@
-from start import start
+from ohjelma.start import start
 from flask import redirect, render_template, request,session
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
