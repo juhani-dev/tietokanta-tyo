@@ -1,1 +1,1 @@
-web:gunicorn start:start --timeout 30
+web: gunicorn start:start --timeout 30
