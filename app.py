@@ -1,12 +1,12 @@
-from ohjelma.start import start
+from start import start
 from flask import redirect, render_template, request,session
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 from sqlalchemy import text
 from werkzeug.security import check_password_hash, generate_password_hash
-from ohjelma.db import db
+from db import db
 
-import ohjelma.searches
+import searches
 
 
 
