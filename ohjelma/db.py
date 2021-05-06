@@ -1,4 +1,4 @@
-from start import start
+from ohjelma.start import start
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 

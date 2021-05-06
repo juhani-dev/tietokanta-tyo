@@ -4,9 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 from sqlalchemy import text
 from werkzeug.security import check_password_hash, generate_password_hash
-from db import db
+from ohjelma.db import db
 
-import searches
+import ohjelma.searches
 
 
 
