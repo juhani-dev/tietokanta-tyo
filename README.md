@@ -19,6 +19,10 @@
 
 *Aplikaatio tarkistaa onko käyttäjällä oikeus katsoa esimerkiksi topics sivua. Osoiterivin kautta ei voi ohittaa sisään kirjautumista.
 *käyttäjänimen on oltava uniikki
+*aihe sivulla näkyy kuinka monta näkyvää viestiä aiheessa on
+*aiheiden luonti ja viestien lähetys ajankohta on näkyvissä
+
+
 
  __repositorio on vaihdettu alkuperäisestä, johtuen ongelmista ubuntun käytöstä windowsilla,__
 

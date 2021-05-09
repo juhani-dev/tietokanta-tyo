@@ -7,4 +7,8 @@
 <form action="/topics">
     <input type="submit" value="etusivulle" />
 </form>
+
+<h4>Olet kirjautunut nimellä {{ session.username }}</h4>
+<h4>you are {{session.level}} level user</h4>
+
 <h2>{{error}}</h2>

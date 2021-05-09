@@ -140,7 +140,7 @@ def subject(id):
         result = db.session.execute(sql,{"id":id} )
         messages = result.fetchall()
     
-        sql ="SELECT  COUNT(message) FROM messages WHERE visible = 1 AND message_id=:id  GROUP BY message_id;"
+        sql ="SELECT  COUNT(message) FROM messages WHERE visible = 0 AND message_id=:id  GROUP BY message_id;"
         result = db.session.execute(sql,{"id":id} )
         count = result.fetchall() 
     
