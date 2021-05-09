@@ -1,13 +1,26 @@
 
-## keskustelupalsta sovellus https://git.heroku.com/tietokanta-tyo.git
+## keskustelupalsta sovellus https://tietokanta-tyo.herokuapp.com/
 
+
+
+#### lopulliset ominaisuudet ja lisäykset
+
+*Mahdollisuus luoda käyttäjänimi salasanalla
+*Käyttäjä voi luoda aiheita
+*Aiheisiin voi lähettää viestejä
+*kullakin käyttäjällä on oma sivunsa
+	*sivulla käyttäjän luomat aiheet sekä hänen lähettämät viestit
+	*sivulla voi lähettää yksityisviestejä jotka näkyvät vain lähettäjälle sekä vastaanottajalle
+
+*Admin käyttäjä voi piilottaa aiheita sekä viestejä normaaleilta käyttäjiltä
+*Haku sivulla voi tehdä hakuja aiheen, nimen tai viestin perusteella
+
+##### muokkauksia
+
+*Aplikaatio tarkistaa onko käyttäjällä oikeus katsoa esimerkiksi topics sivua. Osoiterivin kautta ei voi ohittaa sisään kirjautumista.
+*käyttäjänimen on oltava uniikki
 
  __repositorio on vaihdettu alkuperäisestä, johtuen ongelmista ubuntun käytöstä windowsilla,__
 
-* ohjelma on vielä keskeneräinen eikä käyttäjä ystävällinen 
-* admin käyttäjä on lisätty, pystyy piilottamaan keskustelu aiheita
-* ohjelmassa on mahdollisuus luoda käyttäjä, kirjautua sisään ja ulos
-* haku toiminto nimen, aiheen , tai viestin perusteella on mahdollista
-* ulkoasuun ei ole vielä panostettu
-* ohjelman koodia on refaktoroitu moduuleihin
+
 
