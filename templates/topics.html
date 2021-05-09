@@ -1,13 +1,16 @@
+<h1>Etusivu</h1>
 <hr>
 {%  if session.level == "admin" %}
 
 {% for topic in topics %}
+
 Aihe: 
 
 
 <a href="/topic/{{topic[2]}}"> {{topic[0]}} </a>
 luoja: 
 <a href="{{topic[1]}}"> {{topic[1]}}</a> 
+<a> luotu : {{topic[4].strftime("%Y-%m-%d %H:%M:%S")}}</a>
 <a href="/hide/{{topic[2]}}">piilota aihe </a>
 <a href="/show/{{topic[2]}}">nayta aihe </a>
  {{topic[3]}}
@@ -19,11 +22,12 @@ luoja:
 <a href="/searchgo"> search page</a>
 
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
-<button type="button" onclick="javascript:history.back()">Back</button>
+<p>you are {{session.level}} level user</p>
+
 <a href="/logout">Kirjaudu ulos</a>
 
 {% else %}
-failed
+
 
 {% for topic in topics %}
     {% if topic[3] == 0 %}
@@ -31,7 +35,10 @@ Aihe:
 
 <a href="/topic/{{topic[2]}}"> {{topic[0]}} </a>
 luoja: 
+
 <a href="{{topic[1]}}"> {{topic[1]}}</a> 
+
+<a> luotu : {{topic[4].strftime("%Y-%m-%d %H:%M:%S")}}</a>
 <hr>
     {%endif%}
 {% endfor%}
@@ -40,8 +47,8 @@ luoja:
 <a href="/searchgo"> search page</a>
 
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
-<p>you are {{session.level}} user</p>
-<button type="button" onclick="javascript:history.back()">Back</button>
+<p>you are {{session.level}} level user</p>
+
 <a href="/logout">Kirjaudu ulos</a>
    
 {%endif%}

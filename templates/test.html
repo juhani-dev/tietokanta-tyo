@@ -6,10 +6,39 @@ Mene aiheeseen:
 
 <br>
 {% endfor %}
-<h3>Lahetety viestit:</h3>
+<h3>Käyttäjän lahettämät viestit:</h3>
 
 {% for i in messages %}
-{{i[0]}}
+<p>{{i[0]}} aihe:  <a href="/topic/{{i[2]}}"> {{i[1]}} </a></p>
+
 {% endfor %}
 <br> 
-you are {{session.level}} user
+
+<h4>you are {{session.level}} user {{session.username}}</h4>
+<h3>lähetä privaatti viesti</h3>
+<form action="/send_private" method="POST">
+    <textarea name="message" rows="3" cols="40"></textarea>
+    <br>
+    
+    <input type="submit" value="Lähetä">
+    <input type="hidden" name="name" value="{{ name }}">
+    
+</form>
+<form action="/topics">
+    <input type="submit" value="etusivulle" />
+</form>
+<br>
+{% for p in private %}
+<p>
+{{p[1]}}
+<br>
+
+
+from :{{p[3]}}
+<br>
+ to :{{p[4]}}
+<br>
+sent at :{{p[5]}}
+<br>
+</p>
+{%endfor%}
