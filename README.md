@@ -1,6 +1,10 @@
 
 ## keskustelupalsta sovellus https://tietokanta-tyo.herokuapp.com/
 
+*sovellusta kannattaa testata luomalla uusi käyttäjätili, luoda aihe, lähettä viesti johonkin aiheeseen, lähettää yksityis viesti toiselle käyttäjälle
+sekä kokeilla etsintä sivun toimintaa.
+
+*Tämän jälkeen kannattaa kirjautua uudestaan sisään admin tunnuksilla tester:tester ja kokoeilla aiheiden sekä viestien piilottamista. 
 
 
 #### lopulliset ominaisuudet ja lisäykset
