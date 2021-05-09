@@ -90,17 +90,6 @@ def front():
         sql =db.session.execute("SELECT topic,usersf.username,topics.id,topics.visible,time FROM topics, usersf, topic_creator WHERE topics.id=topic_creator.topic_id and topic_creator.user_id=usersf.id")
         topics = sql.fetchall()
 
-   
-    
-    #result = db.session.execute("SELECT id, topic FROM topics")
-    #topics = result.fetchall()
-    
-    #result = db.session.execute("SELECT user_id, topic_id FROM topic_creator")###
-    #user_ids = result.fetchall()
-
-    
-    #result = db.session.execute("SELECT username FROM userfs")
-    #usernames = result.fetchall()#####################################################
 
         return render_template("topics.html", topics=topics)
 
@@ -111,9 +100,9 @@ def create():
     if len(topic) > 120:
         return render_template("new_topic.html", error="Otsikko ei saa olla yli 120 merkkiä")
     else:    
-        sql = "INSERT INTO topics (topic,visible,time) VALUES (:topic,0,NOW()) RETURNING id" ###uusi 
-        result =db.session.execute(sql, {"topic":topic}) ###uusi
-        topic_id = result.fetchone()[0] ##uusi
+        sql = "INSERT INTO topics (topic,visible,time) VALUES (:topic,0,NOW()) RETURNING id" 
+        result =db.session.execute(sql, {"topic":topic}) 
+        topic_id = result.fetchone()[0] 
 
         aql = "SELECT id FROM usersf WHERE username=:username"
         resultaql = db.session.execute(aql, {"username":username})

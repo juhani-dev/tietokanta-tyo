@@ -8,11 +8,15 @@
 <br>
 Käyttäjältä: <a href="/{{message[1]}}"> {{message[1]}}</a> 
 :{{message[0]}} 
-{{message[2]}}
-<a> lähetetty : {{message[4].strftime("%Y-%m-%d %H:%M:%S")}}</a>
-<a href="/hide_message/{{message[3]}}">piilota viesti </a>
-<a href="/show_message/{{message[3]}}">nayta viesti </a>
 
+<a> lähetetty : {{message[4].strftime("%Y-%m-%d %H:%M:%S")}}</a>
+<a href="/hide_message/{{message[3]}}">piilota viesti </a> ||
+<a href="/show_message/{{message[3]}}">nayta viesti </a>
+    {% if message[2] == 0 %} 
+    näkyy
+    {%else%}
+    piilotettu
+    {%endif%}
 <br>
 {% endfor %}
 

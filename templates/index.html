@@ -1,5 +1,6 @@
 {% if session.username %}
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
+<h3> kirjaudu foorumiin </h3>
 <button type="button" onclick="javascript:history.back()">Back</button>
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}

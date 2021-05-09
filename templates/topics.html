@@ -11,9 +11,14 @@ Aihe:
 luoja: 
 <a href="{{topic[1]}}"> {{topic[1]}}</a> 
 <a> luotu : {{topic[4].strftime("%Y-%m-%d %H:%M:%S")}}</a>
-<a href="/hide/{{topic[2]}}">piilota aihe </a>
+<a href="/hide/{{topic[2]}}">piilota aihe </a> ||
 <a href="/show/{{topic[2]}}">nayta aihe </a>
- {{topic[3]}}
+    {% if topic[3] == 0 %} 
+    näkyy
+    {%else%}
+    piilotettu
+    {%endif%}
+    {{topic[3]}}
 <hr>
 
 {% endfor%}
