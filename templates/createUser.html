@@ -2,6 +2,8 @@
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
 
 {% else %}
+<p>luo itsellesi tili ja kirjaudu sen jälkeen sisälle!</p>
+<br>
 <form action="/createUser" method="POST">
 <p>Tunnus:<br>
 <input type="text" name="username"></p>

@@ -1,9 +1,13 @@
 {% if session.username %}
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
-<h3> kirjaudu foorumiin </h3>
+
 <button type="button" onclick="javascript:history.back()">Back</button>
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
+<h3> kirjaudu foorumiin </h3>
+<br>
+ <p>kirjaudu sisään tai luo itsellesi käyttäjätili </p>
+ <br>
 <form action="/login" method="POST">
 <p>Tunnus:<br>
 <input type="text" name="username"></p>
