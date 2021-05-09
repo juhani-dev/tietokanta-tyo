@@ -9,7 +9,8 @@ CREATE TABLE messages (
 	message_id INTEGER REFERENCES topics,
 	message TEXT,
 	userame TEXT,
-	visible INTEGER
+	visible INTEGER,
+	time TIMESTAMP
 );
 CREATE TABLE usersf (
 	id SERIAL PRIMARY KEY,

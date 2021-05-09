@@ -2,7 +2,7 @@
 <form action="/search" method="GET">
     Etsi aiheita hakusana: <input type="text" name="query">
     <br>
-    <input type="submit" value="Lähetä">
+    <input type="submit" value="tee haku">
     <br>
 
     {%  for  topic in topics %}    
@@ -18,7 +18,7 @@
 
     Etsi viestejä hakusana: <input type="text" name="query_message">
     <br>
-    <input type="submit" value="Lähetä">
+    <input type="submit" value="tee haku">
     <br>
 
     {% for message in messages %}
@@ -32,7 +32,7 @@
 
     Etsi käyttäjää hakusana: <input type="text" name="query_user">
     <br>
-    <input type="submit" value="Lähetä">
+    <input type="submit" value="tee haku">
     <br>
 
     {% for user in users %}
